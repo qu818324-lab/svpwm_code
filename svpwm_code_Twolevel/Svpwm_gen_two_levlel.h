@@ -68,6 +68,6 @@ typedef struct
 //void FOC_Init(void);
 //void FOC_Run(void);
 //void Angle_To_Cos_Sin(float angle, Trans_Cos_Sin_DEF* cos_sin);
-void SVPWM_Calc(Svpwm_cal *p);
+void Svpwm_gen_Update(Svpwm_cal *p);
 
-#endif /* __FOC_FUNCTIONS_H_ */
+#endif /* SVPWM_GEN_TWO_LEVLEL_H */

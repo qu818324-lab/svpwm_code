@@ -14,7 +14,7 @@
 
 
 //SVPWM计算
-void SVPWM_Calc(Svpwm_cal *p)
+void Svpwm_gen_Update(Svpwm_cal *p)
 {
     int sector;
     float t1,t2,x,y,z,T,Ta,Tb,Tc;
