@@ -6,9 +6,9 @@
  *        Ts                     PWM 周期（s）
  *        sw_period              定时器 ARR（一个 PWM 周期的计数值）
  *  输出：Cmpa ~ Cmpf            六路比较值
- *        Cmpa/Cpmd = A 相 S1 / S2
- *        Cmpb/Cpme = B 相 S1 / S2
- *        Cmpc/Cpmf = C 相 S1 / S2
+ *        Cmpa/Cpmb = A 相 S1 / S2
+ *        Cmpc/Cpmd = B 相 S1 / S2
+ *        Cmpe/Cpmf = C 相 S1 / S2
  *        （S1 通 = P 态；S2 通 = P 或 O 态；S3=!S1、S4=!S2 由硬件互补驱动）
  *
  *  算法流程（7 步）：
@@ -43,7 +43,7 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
     {
         if (svpwm_gen != NULL)
         {
-            uint16_t hi = (uint16_t)svpwm_gen->sw_period;
+            uint16_t hi = (uint16_t)svpwm_gen->sw_period - 1;   /* 留 1 个计数余量，避免 100% 占空比 */
             svpwm_gen->Cmpa = 0;   svpwm_gen->Cmpb = hi;   svpwm_gen->Cmpc = 0;
             svpwm_gen->Cpmd = hi;  svpwm_gen->Cpme = 0;  svpwm_gen->Cpmf = hi;
         }
