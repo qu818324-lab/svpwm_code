@@ -339,6 +339,10 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
     float cpc = fmaxf(sc, 0.0f)            * (float)arr;    // C 相 S1 比较值
     float cnc = (1.0f + fminf(sc, 0.0f))   * (float)arr;    // C 相 S2 比较值
 
+    if(cpa > cna) cpa = cna;
+    if(cpb > cnb) cpb = cnb;
+    if(cpc > cnc) cpc = cnc;
+
     if(cpa < 0.0f) cpa = 0.0f;
     if(cpa > top)  cpa = top;
     if(cna < 0.0f) cna = 0.0f;
@@ -352,11 +356,12 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
     if(cnc < 0.0f) cnc = 0.0f;
     if(cnc > top)  cnc = top;
 
-    /* 四舍五入后写入寄存器（通道映射见文件头说明） */
-    svpwm_gen->Cmpa = (uint16_t)(cpa + 0.5f);
-    svpwm_gen->Cpmd = (uint16_t)(cna + 0.5f);
-    svpwm_gen->Cmpb = (uint16_t)(cpb + 0.5f);
-    svpwm_gen->Cpme = (uint16_t)(cnb + 0.5f);
-    svpwm_gen->Cmpc = (uint16_t)(cpc + 0.5f);
-    svpwm_gen->Cpmf = (uint16_t)(cnc + 0.5f);
+    /* 四舍五入后写入寄存器（通道映射见文件头说明）
+    通道顺序：a/b = A 相 S1/S2，c/d = B 相 S1/S2，e/f = C 相 S1/S2 */
+    svpwm_gen->Cmpa = (uint16_t)(cpa + 0.5f);   /* A 相 S1 */
+    svpwm_gen->Cmpb = (uint16_t)(cna + 0.5f);   /* A 相 S2 */
+    svpwm_gen->Cmpc = (uint16_t)(cpb + 0.5f);   /* B 相 S1 */
+    svpwm_gen->Cpmd = (uint16_t)(cnb + 0.5f);   /* B 相 S2 */
+    svpwm_gen->Cmpe = (uint16_t)(cpc + 0.5f);   /* C 相 S1 */
+    svpwm_gen->Cpmf = (uint16_t)(cnc + 0.5f);   /* C 相 S2 */
 }
