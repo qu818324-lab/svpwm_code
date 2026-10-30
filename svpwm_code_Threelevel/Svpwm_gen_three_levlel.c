@@ -44,8 +44,8 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
         if (svpwm_gen != NULL)
         {
             uint16_t hi = (uint16_t)svpwm_gen->sw_period - 1;   /* 留 1 个计数余量，避免 100% 占空比 */
-            svpwm_gen->Cmpa = 0;   svpwm_gen->Cmpb = hi;   svpwm_gen->Cmpc = 0;
-            svpwm_gen->Cpmd = hi;  svpwm_gen->Cpme = 0;  svpwm_gen->Cpmf = hi;
+            svpwm_gen->Cmpa = 0;   svpwm_gen->Cpmb = hi;   svpwm_gen->Cmpc = 0;
+            svpwm_gen->Cpmd = hi;  svpwm_gen->Cmpe = 0;  svpwm_gen->Cpmf = hi;
         }
         return;
     }
@@ -359,7 +359,7 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
     /* 四舍五入后写入寄存器（通道映射见文件头说明）
     通道顺序：a/b = A 相 S1/S2，c/d = B 相 S1/S2，e/f = C 相 S1/S2 */
     svpwm_gen->Cmpa = (uint16_t)(cpa + 0.5f);   /* A 相 S1 */
-    svpwm_gen->Cmpb = (uint16_t)(cna + 0.5f);   /* A 相 S2 */
+    svpwm_gen->Cpmb = (uint16_t)(cna + 0.5f);   /* A 相 S2 */
     svpwm_gen->Cmpc = (uint16_t)(cpb + 0.5f);   /* B 相 S1 */
     svpwm_gen->Cpmd = (uint16_t)(cnb + 0.5f);   /* B 相 S2 */
     svpwm_gen->Cmpe = (uint16_t)(cpc + 0.5f);   /* C 相 S1 */

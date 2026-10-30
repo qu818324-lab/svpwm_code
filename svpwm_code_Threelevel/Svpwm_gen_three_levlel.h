@@ -35,11 +35,11 @@ typedef struct
     float Ts;
 
     uint16_t Cmpa;   /* A 相上管 T1 比较值 */
-    uint16_t Cmpb;   /* B 相上管 T1 比较值 */
-    uint16_t Cmpc;   /* C 相上管 T1 比较值 */
-    uint16_t Cpmd;   /* A 相下管 T4 比较值 */
-    uint16_t Cpme;   /* B 相下管 T4 比较值 */
-    uint16_t Cpmf;   /* C 相下管 T4 比较值 */
+    uint16_t Cpmb;   /* A 相上管 T2 比较值 */
+    uint16_t Cmpc;   /* B 相上管 T1 比较值 */
+    uint16_t Cpmd;   /* B 相上管 T2 比较值 */
+    uint16_t Cmpe;   /* C 相上管 T1 比较值 */
+    uint16_t Cpmf;   /* C 相上管 T2 比较值 */
     float sw_period;  /* ePWM 周期计数峰值 ARR（中央对齐=半周期计数值） */
 } Svpwm_threelevel_cal;
 
