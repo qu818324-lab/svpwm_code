@@ -6,7 +6,13 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
 {
     /* 输入防护：空指针或母线电压异常时输出零矢量（OOO），直接返回 */
     if(svpwm_gen == NULL || svpwm_gen->Udc <= 0.0f)
-    {
+    {   
+        if (svpwm_gen != NULL)
+        {
+            uint16_t hi = (uint16_t)svpwm_gen->sw_period;
+            svpwm_gen->Cmpa = hi;  svpwm_gen->Cmpb = hi;  svpwm_gen->Cmpc = hi;
+            svpwm_gen->Cpmd = 0;   svpwm_gen->Cpme = 0;   svpwm_gen->Cpmf = 0;
+        }
         return;
     }
 
@@ -73,7 +79,9 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
     {
         k = 1.0f;
     }
-
+    Vref = k * udc / sqrt3;                     //限幅后的矢量幅值
+    ua = Vref * cosf(theta_1);
+    ub = Vref * sin_t;                          //sin_t 就是 sinf(theta_1)，不用重算
     /*判断小区域（扇区1几何：V1=POO=(Udc/3,0)，V2=PPO=(Udc/6,sqrt3*Udc/6)，
       中矢量 V7=PON=(Udc/2,sqrt3*Udc/6)，大矢量 PNN=(2Udc/3,0)、PPN=(Udc/3,sqrt3*Udc/3)）*/
     if (theta_1 >= 0 && theta_1 <= pi_6)
