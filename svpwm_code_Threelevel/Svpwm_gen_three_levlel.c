@@ -44,8 +44,8 @@ void Svpwm_gen_Update(Svpwm_threelevel_cal* svpwm_gen)
         if (svpwm_gen != NULL)
         {
             uint16_t hi = (uint16_t)svpwm_gen->sw_period;
-            svpwm_gen->Cmpa = 0;   svpwm_gen->Cmpb = 0;   svpwm_gen->Cmpc = 0;
-            svpwm_gen->Cpmd = hi;  svpwm_gen->Cpme = hi;  svpwm_gen->Cpmf = hi;
+            svpwm_gen->Cmpa = 0;   svpwm_gen->Cmpb = hi;   svpwm_gen->Cmpc = 0;
+            svpwm_gen->Cpmd = hi;  svpwm_gen->Cpme = 0;  svpwm_gen->Cpmf = hi;
         }
         return;
     }
